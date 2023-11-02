@@ -1,0 +1,137 @@
+// .instructions-container {
+//     height: 100vh;
+//     max-height: 100vh;
+//     max-width: 100%;
+//     margin: 0 auto;
+//     padding: 20px;
+//     color: #ccd3dc;
+// }
+
+// .instructions-title {
+//     display: flex;
+//     align-items: center;
+//     text-align: center;
+//     justify-content: center;
+// }
+
+// .instructions-content {
+//     margin: 0 auto;
+
+// }
+
+// .step {
+//     display: flex;
+//     align-items: baseline;
+// }
+
+// .step-icon {
+//     width: 30px;
+//     height: 30px;
+//     background-color: #007bff;
+//     color: white;
+//     border-radius: 50%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     font-weight: bold;
+//     font-size: 18px;
+//     margin-right: 10px;
+// }
+
+// .step-content {
+//     flex: 1;
+// }
+
+// h2 {
+//     font-size: 24px;
+//     margin-bottom: 20px;
+// }
+
+// h3 {
+//     font-size: 20px;
+//     margin-bottom: 10px;
+// }
+
+// p {
+//     font-size: 16px;
+// }
+
+
+.instructions-container {
+    background-color: rgb(90 90 90 / 50%);
+    backdrop-filter: blur(1px);
+    border-radius: 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #fff;
+    margin-bottom: 25px;
+
+}
+
+.instructions-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.instructions-content {
+    margin: 0 auto;
+}
+
+.step {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: flex-start;
+
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background-color: #92a1b0;
+    /* Blue step number background */
+    // color: white;
+
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #92a1b0;
+}
+
+.step-content p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.instructions-note {
+    margin-top: 30px;
+    font-size: 14px;
+    color: rgb(188, 188, 188)
+        /* Lighter text color for notes */
+}
+
+/* Media query for responsive design */
+@media (max-width: 600px) {
+    .step {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step-number {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}

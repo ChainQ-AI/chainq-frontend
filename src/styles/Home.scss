@@ -1,0 +1,250 @@
+.main-div-landing {
+  background-color: #4b4b4b;
+  // background-color: #202123;
+  min-height: 100vh;
+  background-image: radial-gradient(circle, #3b2828 1px, transparent 1px);
+  background-size: 15px 15px;
+}
+
+.home-landing-sub {
+  // height: 100vh;
+  margin-bottom: 6%;
+}
+
+.home-left-section {
+  width: 60%;
+  margin-left: 7%;
+  display: flex;
+  text-align: initial;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.hero-right {
+  width: 50%;
+}
+
+.hero-right-bg1 {
+  width: 80%;
+  margin: 0px 10% 0% 0%;
+}
+
+.landing-flex {
+  display: flex;
+  align-items: center;
+  margin: 15px auto;
+  // min-height: 78vh;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  color: #ffffff;
+  width: 80%;
+  margin: 0;
+}
+
+.home-desc {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  padding: 20px 0px;
+  color: white;
+  margin: 0;
+  width: 80%;
+  line-height: 25px;
+}
+
+.start-btn-flex {
+  padding: 20px 40px;
+  border-radius: 50px;
+  width: 30px;
+}
+
+.footer-flex {
+  background-color: #09090b;
+  display: flex;
+  width: 100%;
+  padding: 20px 0px;
+  bottom: 0;
+  // background-image: url("../assets/footer.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+  z-index: 1;
+  justify-content: space-around;
+}
+
+.try-and-instructions-btn {
+  width: 100%;
+  margin-top: 8%;
+  display: flex;
+  // text-align: center;
+  align-items: center;
+  // justify-content: center;
+}
+
+.try-btn {
+  background-color: #2e4062;
+  // background-color: #246aee;
+  border: 1px solid #246aee;
+  color: white;
+
+  width: 28%;
+  padding: 3% 3% 2% 3%;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  border-radius: 10px;
+  display: flex;
+  // position: relative;
+}
+
+.try-btn:hover {
+  box-shadow: rgb(42, 35, 207) 0px 4px 24px -6px;
+  transition: all 200ms ease 0s;
+  border: 1px solid #246aee;
+  background-color: #09090b;
+}
+
+.rightA-icon-container {
+  transition: transform 0.2s ease;
+  margin-left: 6px;
+}
+
+.try-btn:hover .rightA-icon-container {
+  transform: translateX(5px);
+}
+
+.instructions-text-main-class {
+  margin-left: 2%;
+}
+
+.instructions-text-class {
+  color: #d5d7dc;
+  cursor: pointer;
+}
+
+.instructions-text-class:hover {
+  transition: transform ease-in-out;
+  transition-duration: 0.35s;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  // transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  color: #8d8e91;
+}
+
+// ..............navbar css...............
+
+.navbar {
+  padding: 50px 30px;
+  display: flex;
+  z-index: 0;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo h1 {
+  line-height: 2;
+  font-size: 30px;
+  text-align: left;
+  flex: 1 1;
+  font-weight: 700;
+}
+
+.extension-btn {
+  padding: 20px;
+  /* width: 30%; */
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  background: #ffffff1f;
+  border-radius: 15px;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  /* .connect {
+        visibility: hidden;
+      } */
+
+  .header {
+    .navbar {
+      justify-content: space-around;
+
+      .logo h1 {
+        line-height: 1;
+        font-size: 10px;
+      }
+
+      .navmenu {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top: 2px solid rgb(211, 211, 211);
+        border-bottom: 2px solid rgb(211, 211, 211);
+        z-index: 100;
+        position: fixed;
+        left: -100%;
+        top: 3.3rem;
+        flex-direction: column;
+        background: rgb(18, 18, 18);
+        width: 50%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+
+        .navitem {
+          margin: 2.5rem 0;
+        }
+      }
+
+      .navmenu.active {
+        left: 0;
+      }
+
+      .hamburger {
+        /* margin-left: auto; */
+        display: block;
+        cursor: pointer;
+      }
+
+      .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active .bar:nth-child(1) {
+        -webkit-transform: translateY(8px) rotate(45deg);
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      .hamburger.active .bar:nth-child(3) {
+        -webkit-transform: translateY(-8px) rotate(-45deg);
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
+  }
+}
+
+.adapter-react-button {
+  border-radius: 30px;
+}
+
+/* Add this CSS to your existing stylesheet */
+@keyframes moveUpDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+    /* Adjust the value for the desired movement */
+  }
+}
+
+/* Apply the animation to the .animated-bg class */
+.animated-bg {
+  animation: moveUpDown 4s ease-in-out infinite;
+  /* Adjust the duration and timing as needed */
+}
