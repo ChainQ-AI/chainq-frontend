@@ -6,15 +6,14 @@ import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
 import Cookies from "js-cookie";
 import abi from "../contract/artifacts/chainq_abi.json";
 import { CHAINQ_SHASTA_TESTNET } from "../config";
+import { account, walletClient } from "../WalletConfig";
 
 const PlanPopup = ({ onClose }) => {
-  const { connected, address } = useWallet();
+  console.log(account);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { tronWeb } = window;
-  var resData;
 
-  //   console.log(tronWeb.address.toHex("TXFwhfbRgVMWkWm7xn5s6QsNUp4RBmYy5t"));
+  var resData;
 
   const userLoginAndAuthenticate = async (signature, address) => {
     try {
@@ -48,7 +47,10 @@ const PlanPopup = ({ onClose }) => {
   };
 
   const getSign = async () => {
-    const signature = await tronWeb.trx.signMessageV2("Login to ChainQ");
+    const signature = await walletClient.signMessage({
+      account,
+      message: "hello world",
+    });
     if (signature) {
       setLoading(true); // Set loading to true when signing starts
       await userLoginAndAuthenticate(signature, address);
