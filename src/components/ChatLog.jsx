@@ -12,6 +12,7 @@ import { BounceLoader, ClipLoader } from "react-spinners";
 import { getUserChatIds, getChatPromptsAndResponses } from "../APIs/apis";
 import { TbLayoutSidebarLeftCollapseFilled } from "react-icons/tb";
 import { TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
+import { useAccount, useConnect } from "wagmi";
 
 const ChatLog = ({
   messages,
@@ -24,7 +25,11 @@ const ChatLog = ({
   // const responseContainerRef = useRef(null);
   const [isSigned, setIsSigned] = useState(null);
   const [token, setToken] = useState(null);
-  const { connected, address } = useWallet();
+
+  const { address, isConnecting, isDisconnected } = useAccount();
+  const { connector: activeConnector, isConnected } = useAccount();
+  const { connect, connectors, error, pendingConnector } = useConnect();
+
   const [activeId, setActiveId] = useState();
   const [chatData, setChatData] = useState([]);
   const [isPageLoading, setIsPageLoading] = useState(true);
@@ -62,7 +67,7 @@ const ChatLog = ({
     } else {
       setIsSigned(false);
     }
-  }, [address, connected, token]);
+  }, [address, isConnected, token]);
 
   const fetchChatPromptsAndResponses = async () => {
     try {

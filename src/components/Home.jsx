@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import PlansPopup from "./PlansPopup";
 import abi from "../artifacts/chainq_abi.json";
-import { CHAINQ_SHASTA_TESTNET } from "../config";
+import { CHAINQ_SCROLL } from "../config";
 import "../styles/Home.scss";
 import HomeInstructions from "./HomeInstructions";
 import { FaAnglesRight } from "react-icons/fa6";
@@ -40,10 +40,7 @@ function Home() {
     if (isConnected) {
       console.log(isSigned);
       if (isSigned == true) {
-        const connectedContract = await tronWeb.contract(
-          abi,
-          CHAINQ_SHASTA_TESTNET
-        );
+        const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
 
         let txget = await connectedContract
           .getSubscriptionStatus(address)

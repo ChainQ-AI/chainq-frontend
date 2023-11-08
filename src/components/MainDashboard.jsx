@@ -8,9 +8,12 @@ import axios from "axios";
 import { TbSend } from "react-icons/tb";
 import { getUserChatIds, addChat } from "../APIs/apis";
 import Cookies from "js-cookie";
+import { useAccount, useConnect } from "wagmi";
 
 const Dashboard = () => {
-  const { connected, address } = useWallet();
+  const { address, isConnecting, isDisconnected } = useAccount();
+  const { connector: activeConnector, isConnected } = useAccount();
+  const { connect, connectors, error, pendingConnector } = useConnect();
   const [newMessage, setNewMessage] = useState("");
   const [sessions, setSessions] = useState([]);
   const [showChatLog, setShowChatLog] = useState(false);
@@ -239,11 +242,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      {connected ? (
-        <>
-          <Widget address={address} chain="Shasta" />
-        </>
-      ) : null}
     </div>
   );
 };

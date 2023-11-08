@@ -7,7 +7,8 @@ import Cookies from "js-cookie";
 import PlansPopup from "./PlansPopup";
 import { ClipLoader } from "react-spinners";
 import abi from "../artifacts/chainq_abi.json";
-import { CHAINQ_SHASTA_TESTNET } from "../config";
+import { CHAINQ_SCROLL } from "../config";
+import { useAccount, useConnect } from "wagmi";
 
 const MessageHistory = ({
   inputRef,
@@ -24,7 +25,11 @@ const MessageHistory = ({
   const [chatTitleList, setChatTitleList] = useState([]);
   const [apiResponse, setApiResponse] = useState([]);
   const [token, setToken] = useState(null);
-  const { connected, address } = useWallet();
+
+  const { address, isConnecting, isDisconnected } = useAccount();
+  const { connector: activeConnector, isConnected } = useAccount();
+  const { connect, connectors, error, pendingConnector } = useConnect();
+
   const [showSPopup, setShowSPopup] = useState();
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [subscriptionData, setSubscriptionData] = useState({
@@ -55,20 +60,17 @@ const MessageHistory = ({
       getPlanDetails();
 
       // Check if there is an authenticated user and get their chat IDs
-      if (connected && isSigned) {
+      if (isConnected && isSigned) {
         // fetchUserChatIds();
         fetchUserChatIds(address, token);
       }
     } else {
       setIsSigned(false);
     }
-  }, [address, connected, token]);
+  }, [address, isConnected, token]);
 
   const getPlanDetails = async () => {
-    const connectedContract = await tronWeb.contract(
-      abi,
-      CHAINQ_SHASTA_TESTNET
-    );
+    const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
     console.log(connectedContract);
     let txget = await connectedContract.getSubscriptionStatus(address).call();
     console.log(txget.hasSubscription);
@@ -108,9 +110,9 @@ const MessageHistory = ({
   };
 
   useEffect(() => {
-    // Call the function to set the currentChatId when apiResponse or connected changes
+    // Call the function to set the currentChatId when apiResponse or isConnected changes
     setLatestChatId();
-  }, [apiResponse, connected]);
+  }, [apiResponse, isConnected]);
 
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
@@ -137,7 +139,7 @@ const MessageHistory = ({
     } else if (apiResponse.length >= 1) {
       const deleteChatConfirm = window.confirm("Click ok to continue.");
       if (deleteChatConfirm) {
-        if (connected) {
+        if (isConnected) {
           try {
             const response = await deleteChat(chatID, token);
             console.log(response);
@@ -166,7 +168,7 @@ const MessageHistory = ({
   };
 
   const handleDeleteUserData = async () => {
-    if (connected) {
+    if (isConnected) {
       const confirmDelete = window.confirm("It will delete all your chats.");
       if (confirmDelete) {
         try {

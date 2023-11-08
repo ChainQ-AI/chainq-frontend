@@ -3,15 +3,19 @@ import "../styles/PlansPopup.scss";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import abi from "../artifacts/chainq_abi.json";
-import { CHAINQ_SHASTA_TESTNET } from "../config";
+import { CHAINQ_SCROLL } from "../config";
 import EmptyComponent from "./EmptyComponent";
+import { useAccount, useConnect } from "wagmi";
 
 function PlansPopup({ setShowSPopup, onClose }) {
   console.log("hello me aa gaya");
   const currentPlanPoints = ["Limited to 10 chats"];
   const upgradePlanPoints = ["Unlimited chats"];
 
-  const { connected, address } = useWallet();
+  const { address, isConnecting, isDisconnected } = useAccount();
+  const { connector: activeConnector, isConnected } = useAccount();
+  const { connect, connectors, error, pendingConnector } = useConnect();
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { tronWeb } = window;
@@ -33,10 +37,7 @@ function PlansPopup({ setShowSPopup, onClose }) {
 
   const getPlanDetails = async () => {
     setLoading(true);
-    const connectedContract = await tronWeb.contract(
-      abi,
-      CHAINQ_SHASTA_TESTNET
-    );
+    const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
     console.log(connectedContract);
     let txget = await connectedContract.getSubscriptionStatus(address).call();
     console.log(txget.hasSubscription);
@@ -49,11 +50,8 @@ function PlansPopup({ setShowSPopup, onClose }) {
   };
 
   const buyPlan = async () => {
-    if (connected && isSigned) {
-      const connectedContract = await tronWeb.contract(
-        abi,
-        CHAINQ_SHASTA_TESTNET
-      );
+    if (isConnected && isSigned) {
+      const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
       console.log(connectedContract);
       let txget = await connectedContract.subscriptionPrice().call();
       console.log(parseInt(txget));

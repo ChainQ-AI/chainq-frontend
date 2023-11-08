@@ -3,10 +3,10 @@ import "../styles/Popup.css";
 import { addUser } from "../APIs/apis";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import abi from "../artifacts/chainq_abi.json";
-import { CHAINQ_SHASTA_TESTNET } from "../config";
+import chainq_abi from "../artifacts/chainq_abi.json";
+import { CHAINQ_SCROLL } from "../config";
 import { useAccount, useConnect } from "wagmi";
-import { account, walletClient } from "../WalletConfig";
+import { account, walletClient, publicClient } from "../WalletConfig";
 
 const Popup = ({ onClose, setShowPlanPopup }) => {
   console.log(account);
@@ -27,17 +27,15 @@ const Popup = ({ onClose, setShowPlanPopup }) => {
       if (resData.status === 200) {
         Cookies.set(address, resData.data.token);
         onClose();
-        const connectedContract = await tronWeb.contract(
-          abi,
-          CHAINQ_SHASTA_TESTNET
-        );
-        console.log(connectedContract);
-        let txget = await connectedContract
-          .getSubscriptionStatus(address)
-          .call();
-        console.log(txget.hasSubscription);
+        const result = await publicClient.readContract({
+          address: CHAINQ_SCROLL,
+          abi: chainq_abi.abi,
+          functionName: "getSubscriptionStatus",
+          args: [address],
+        });
+        console.log(result);
 
-        if (txget.hasSubscription) {
+        if (result[0]) {
           navigate("/chat-dashboard");
         } else {
           console.log("nai hai plan");
@@ -52,7 +50,7 @@ const Popup = ({ onClose, setShowPlanPopup }) => {
 
   const getSign = async () => {
     const signature = await walletClient.signMessage({
-      account,
+      account: account,
       message: "Login to ChainQ",
     });
     console.log(signature);
