@@ -19,7 +19,7 @@ function PlansPopup({ setShowSPopup, onClose }) {
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { tronWeb } = window;
+
   const [isSigned, setIsSigned] = useState(null);
   const [subscriptionData, setSubscriptionData] = useState({
     hasSubscription: false,
