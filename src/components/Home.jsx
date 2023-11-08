@@ -38,13 +38,6 @@ function Home() {
       // console.log(isSigned);
       if (isSigned == true) {
         const { isActive } = await getPlanStatus();
-        /* const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
-
-        let txget = await connectedContract
-          .getSubscriptionStatus(address)
-          .call();
-        console.log(txget.hasSubscription);
-        // console.log(txget); */
 
         if (isActive) {
           navigate("./chat-dashboard");
