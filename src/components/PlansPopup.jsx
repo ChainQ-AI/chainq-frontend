@@ -3,18 +3,19 @@ import "../styles/PlansPopup.scss";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import abi from "../artifacts/chainq_abi.json";
-import { CHAINQ_SCROLL } from "../config";
-import EmptyComponent from "./EmptyComponent";
 import { useAccount, useConnect } from "wagmi";
+import { getPlanStatus } from "../helper/planStatus";
+import { publicClient, walletClient, account } from "../walletConfig";
+import { CHAINQ_SCROLL, PLAN_PRICE } from "../config";
+import chainq_abi from "../artifacts/chainq_abi.json";
+import { purchaseSubscription } from "../helper/buyPlan";
 
 function PlansPopup({ setShowSPopup, onClose }) {
   console.log("hello me aa gaya");
-  const currentPlanPoints = ["Limited to 10 chats"];
   const upgradePlanPoints = ["Unlimited chats"];
 
   const { address, isConnecting, isDisconnected } = useAccount();
   const { connector: activeConnector, isConnected } = useAccount();
-  const { connect, connectors, error, pendingConnector } = useConnect();
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -25,55 +26,38 @@ function PlansPopup({ setShowSPopup, onClose }) {
     expirationTimestamp: 0,
   });
   useEffect(() => {
-    // Check if the user has signed a message using cookies
-    const signatureFromCookie = Cookies.get(address); // Use the address as the key
-    if (signatureFromCookie) {
-      setIsSigned(true);
-      getPlanDetails();
-    } else {
-      setIsSigned(false); // Address changed, reset the sign status
-    }
+    // Define an asynchronous function to handle the logic
+    const checkSignatureAndPlanStatus = async () => {
+      const signatureFromCookie = Cookies.get(address);
+      if (signatureFromCookie) {
+        setIsSigned(true);
+
+        const { isActive, expiry } = await getPlanStatus();
+        console.log(isActive);
+        console.log(expiry);
+        setSubscriptionData({
+          hasSubscription: isActive,
+          expirationTimestamp: parseInt(expiry),
+        });
+      } else {
+        setIsSigned(false); // Address changed, reset the sign status
+      }
+    };
+
+    // Call the asynchronous function
+    checkSignatureAndPlanStatus();
   }, [address]);
 
-  const getPlanDetails = async () => {
-    setLoading(true);
-    const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
-    console.log(connectedContract);
-    let txget = await connectedContract.getSubscriptionStatus(address).call();
-    console.log(txget.hasSubscription);
-    console.log(parseInt(txget.expirationTimestamp));
-    setSubscriptionData({
-      hasSubscription: txget.hasSubscription,
-      expirationTimestamp: parseInt(txget.expirationTimestamp),
-    });
-    setLoading(false);
-  };
-
   const buyPlan = async () => {
-    if (isConnected && isSigned) {
-      const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
-      console.log(connectedContract);
-      let txget = await connectedContract.subscriptionPrice().call();
-      console.log(parseInt(txget));
-      // console.log(tronWeb.toSun(txget));
-      if (txget) {
-        let tx = await connectedContract.purchaseSubscription().send({
-          callValue: tronWeb.toSun(txget),
-        });
-        GetHash(
-          tx,
-          "Shasta" // Mainnet, Shasta, Nile
-        );
+    if (isConnected && isSigned && !subscriptionData.hasSubscription) {
+      const result = await purchaseSubscription();
 
-        console.log(tx);
-        if (tx) {
-          let txget = await connectedContract
-            .getSubscriptionStatus(address)
-            .call();
-          console.log(txget.hasSubscription);
-          if (txget.hasSubscription) {
-            navigate("/chat-dashboard");
-          }
+      console.log(result);
+      const { isActive } = await getPlanStatus();
+
+      if (result.success) {
+        if (isActive) {
+          navigate("/chat-dashboard");
         }
       }
     } else {

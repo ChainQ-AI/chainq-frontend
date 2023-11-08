@@ -11,20 +11,17 @@ import { CHAINQ_SCROLL } from "../config";
 import "../styles/Home.scss";
 import HomeInstructions from "./HomeInstructions";
 import { FaAnglesRight } from "react-icons/fa6";
-import { useAccount, useConnect } from "wagmi";
+import { useAccount } from "wagmi";
+import { getPlanStatus } from "../helper/planStatus";
 
 function Home() {
   const navigate = useNavigate();
   const { address, isConnecting, isDisconnected } = useAccount();
-  const { connector: activeConnector, isConnected } = useAccount();
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect();
+  const { isConnected } = useAccount();
+
   const [showPopup, setShowPopup] = useState(false);
   const [showPlanPopup, setShowPlanPopup] = useState(false);
   const [isSigned, setIsSigned] = useState(null);
-
-  console.log(isConnected);
-  console.log(address);
 
   useEffect(() => {
     // Check if the user has signed a message using cookies
@@ -38,16 +35,18 @@ function Home() {
 
   const getStarted = async () => {
     if (isConnected) {
-      console.log(isSigned);
+      // console.log(isSigned);
       if (isSigned == true) {
-        const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
+        const { isActive } = await getPlanStatus();
+        /* const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
 
         let txget = await connectedContract
           .getSubscriptionStatus(address)
           .call();
         console.log(txget.hasSubscription);
-        // console.log(txget);
-        if (txget.hasSubscription) {
+        // console.log(txget); */
+
+        if (isActive) {
           navigate("./chat-dashboard");
         } else {
           setShowPlanPopup(!showPlanPopup);

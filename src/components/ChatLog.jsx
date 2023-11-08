@@ -55,7 +55,6 @@ const ChatLog = ({
       return <EmptyComponent />;
     } else {
       setActiveId(currentChatId);
-      console.log(currentChatId);
     }
   }, [currentChatId, activeId]);
 

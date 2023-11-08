@@ -9,6 +9,7 @@ import { ClipLoader } from "react-spinners";
 import abi from "../artifacts/chainq_abi.json";
 import { CHAINQ_SCROLL } from "../config";
 import { useAccount, useConnect } from "wagmi";
+import { getPlanStatus } from "../helper/planStatus";
 
 const MessageHistory = ({
   inputRef,
@@ -52,34 +53,32 @@ const MessageHistory = ({
   }, [isPageLoading, apiResponse]);
 
   useEffect(() => {
-    const signatureFromCookie = Cookies.get(address); // Use the address as the key
-    console.log("signatureFromCookie", signatureFromCookie);
-    if (signatureFromCookie) {
-      setToken(signatureFromCookie);
-      setIsSigned(true);
-      getPlanDetails();
+    // Define an asynchronous function to handle the logic
+    const checkSignatureAndPlanStatus = async () => {
+      const signatureFromCookie = Cookies.get(address);
+      if (signatureFromCookie) {
+        setIsSigned(true);
+        console.log("isSigned inside if:", isSigned); // Add this line
+        setToken(signatureFromCookie);
 
-      // Check if there is an authenticated user and get their chat IDs
-      if (isConnected && isSigned) {
-        // fetchUserChatIds();
-        fetchUserChatIds(address, token);
+        const { isActive, expiry } = await getPlanStatus();
+
+        setSubscriptionData({
+          hasSubscription: isActive,
+          expirationTimestamp: parseInt(expiry),
+        });
+
+        if (isConnected && isSigned) {
+          fetchUserChatIds(address, token);
+        }
+      } else {
+        setIsSigned(false);
       }
-    } else {
-      setIsSigned(false);
-    }
-  }, [address, isConnected, token]);
+    };
 
-  const getPlanDetails = async () => {
-    const connectedContract = await tronWeb.contract(abi, CHAINQ_SCROLL);
-    console.log(connectedContract);
-    let txget = await connectedContract.getSubscriptionStatus(address).call();
-    console.log(txget.hasSubscription);
-    console.log(parseInt(txget.expirationTimestamp));
-    setSubscriptionData({
-      hasSubscription: txget.hasSubscription,
-      expirationTimestamp: parseInt(txget.expirationTimestamp),
-    });
-  };
+    // Call the asynchronous function
+    checkSignatureAndPlanStatus();
+  }, [address, isSigned]);
 
   const fetchUserChatIds = async () => {
     try {

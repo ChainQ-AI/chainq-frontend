@@ -1,14 +1,9 @@
 import { WagmiConfig, createConfig } from "wagmi";
-import {
-  ConnectKitProvider,
-  ConnectKitButton,
-  getDefaultConfig,
-} from "connectkit";
+import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import "./App.css";
 import MainDashboard from "./components/MainDashboard.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Navbar from "./components/Navbar";
 import { scrollSepolia } from "wagmi/chains";
 const chains = [scrollSepolia];
 

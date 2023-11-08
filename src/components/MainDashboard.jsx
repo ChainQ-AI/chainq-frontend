@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const signatureFromCookie = Cookies.get(address);
-    console.log("signatureFromCookie", signatureFromCookie);
+    // console.log("signatureFromCookie", signatureFromCookie);
     if (signatureFromCookie) {
       setToken(signatureFromCookie);
       setIsSigned(true);

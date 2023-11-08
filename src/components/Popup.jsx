@@ -3,13 +3,14 @@ import "../styles/Popup.css";
 import { addUser } from "../APIs/apis";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import chainq_abi from "../artifacts/chainq_abi.json";
-import { CHAINQ_SCROLL } from "../config";
+
 import { useAccount, useConnect } from "wagmi";
 import { account, walletClient, publicClient } from "../WalletConfig";
+import { getPlanStatus } from "../helper/planStatus";
 
 const Popup = ({ onClose, setShowPlanPopup }) => {
   console.log(account);
+
   const { address, isConnecting, isDisconnected } = useAccount();
   const { connector: activeConnector, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -27,15 +28,9 @@ const Popup = ({ onClose, setShowPlanPopup }) => {
       if (resData.status === 200) {
         Cookies.set(address, resData.data.token);
         onClose();
-        const result = await publicClient.readContract({
-          address: CHAINQ_SCROLL,
-          abi: chainq_abi.abi,
-          functionName: "getSubscriptionStatus",
-          args: [address],
-        });
-        console.log(result);
 
-        if (result[0]) {
+        const { isActive } = await getPlanStatus();
+        if (isActive) {
           navigate("/chat-dashboard");
         } else {
           console.log("nai hai plan");
