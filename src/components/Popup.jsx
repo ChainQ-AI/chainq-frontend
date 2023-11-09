@@ -29,7 +29,7 @@ const Popup = ({ onClose, setShowPlanPopup }) => {
         Cookies.set(address, resData.data.token);
         onClose();
 
-        const { isActive } = await getPlanStatus();
+        const { isActive } = await getPlanStatus(address);
         if (isActive) {
           navigate("/chat-dashboard");
         } else {

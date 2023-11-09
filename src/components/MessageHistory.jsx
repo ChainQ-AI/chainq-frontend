@@ -61,7 +61,7 @@ const MessageHistory = ({
         console.log("isSigned inside if:", isSigned); // Add this line
         setToken(signatureFromCookie);
 
-        const { isActive, expiry } = await getPlanStatus();
+        const { isActive, expiry } = await getPlanStatus(address);
 
         setSubscriptionData({
           hasSubscription: isActive,

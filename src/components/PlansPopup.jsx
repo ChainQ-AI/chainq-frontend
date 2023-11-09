@@ -32,7 +32,7 @@ function PlansPopup({ setShowSPopup, onClose }) {
       if (signatureFromCookie) {
         setIsSigned(true);
 
-        const { isActive, expiry } = await getPlanStatus();
+        const { isActive, expiry } = await getPlanStatus(address);
         console.log(isActive);
         console.log(expiry);
         setSubscriptionData({
@@ -53,7 +53,7 @@ function PlansPopup({ setShowSPopup, onClose }) {
       const result = await purchaseSubscription();
 
       console.log(result);
-      const { isActive } = await getPlanStatus();
+      const { isActive } = await getPlanStatus(address);
 
       if (result.success) {
         if (isActive) {

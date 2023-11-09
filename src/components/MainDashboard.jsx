@@ -9,6 +9,8 @@ import { TbSend } from "react-icons/tb";
 import { getUserChatIds, addChat } from "../APIs/apis";
 import Cookies from "js-cookie";
 import { useAccount, useConnect } from "wagmi";
+import { ConnectKitButton } from "connectkit";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
@@ -177,71 +179,100 @@ const Dashboard = () => {
   }, [newMessage]);
 
   return (
-    <div className="chat-app-container">
-      <MessageHistory
-        inputRef={inputRef}
-        sessions={sessions}
-        setCurrentChatId={setCurrentChatId}
-        currentChatId={currentChatId}
-        handleCreateNewChat={handleCreateNewChat}
-        messages={chatMessages}
-        showMessageHistory={showMessageHistory}
-      />
-
-      <div className="chat-box-main">
-        <div className="chat-box">
-          {currentChatId === null && !showChatLog ? (
-            <EmptyComponent
-              setNewMessage={setNewMessage}
-              sendMessage={sendMessage}
+    <div>
+      {isConnected ? (
+        isSigned ? (
+          <div className="chat-app-container">
+            <MessageHistory
               inputRef={inputRef}
-            />
-          ) : (
-            <ChatLog
-              setShowChatLog={setShowChatLog}
-              showChatLog={showChatLog}
-              isLoading={isLoading}
+              sessions={sessions}
               setCurrentChatId={setCurrentChatId}
               currentChatId={currentChatId}
-              messages={chatMessages2}
+              handleCreateNewChat={handleCreateNewChat}
+              messages={chatMessages}
               showMessageHistory={showMessageHistory}
-              setShowMessageHistory={setShowMessageHistory}
             />
-          )}
 
-          <div className="prompt-input-area">
-            <div className="prompt-elements">
-              <textarea
-                className="prompt-input"
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                onKeyDown={handleKeyPress}
-                placeholder="Send your query"
-                disabled={isLoading}
-                ref={inputRef}
-              ></textarea>
-              <div>
-                {isLoading ? (
-                  <div className="loader">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                  </div>
+            <div className="chat-box-main">
+              <div className="chat-box">
+                {currentChatId === null && !showChatLog ? (
+                  <EmptyComponent
+                    setNewMessage={setNewMessage}
+                    sendMessage={sendMessage}
+                    inputRef={inputRef}
+                  />
                 ) : (
-                  <button
-                    onClick={sendMessage}
-                    disabled={isSendButtonDisabled}
-                    className="send-btn"
-                  >
-                    <TbSend />
-                  </button>
+                  <ChatLog
+                    setShowChatLog={setShowChatLog}
+                    showChatLog={showChatLog}
+                    isLoading={isLoading}
+                    setCurrentChatId={setCurrentChatId}
+                    currentChatId={currentChatId}
+                    messages={chatMessages2}
+                    showMessageHistory={showMessageHistory}
+                    setShowMessageHistory={setShowMessageHistory}
+                  />
                 )}
+
+                <div className="prompt-input-area">
+                  <div className="prompt-elements">
+                    <textarea
+                      className="prompt-input"
+                      type="text"
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      onKeyDown={handleKeyPress}
+                      placeholder="Send your query"
+                      disabled={isLoading}
+                      ref={inputRef}
+                    ></textarea>
+                    <div>
+                      {isLoading ? (
+                        <div className="loader">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={sendMessage}
+                          disabled={isSendButtonDisabled}
+                          className="send-btn"
+                        >
+                          <TbSend />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        ) : (
+          <div className="full-page-container">
+            <div className="centered-content">
+              <p className="connect-wallet-message">
+                Please sign in to continue ⚠️
+              </p>
+              <Link to="/">
+                <button className="sign-in-button">Sign In</button>
+              </Link>
+              {/* Add your sign-in component or message here */}
+            </div>
+          </div>
+        )
+      ) : (
+        <div className="full-page-container">
+          <div className="centered-content">
+            <p className="connect-wallet-message">
+              Please connect to the wallet ⚠️
+            </p>
+            <div className="button-container">
+              <ConnectKitButton></ConnectKitButton>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

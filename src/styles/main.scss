@@ -30,7 +30,6 @@
     0 8px 16px rgba(0, 0, 0, 0.11);
 }
 
-
 // .prompt-input-area {
 //   display: flex;
 //   width: 87%;
@@ -56,7 +55,6 @@
 
 .prompt-elements {
   width: -webkit-fill-available;
-
 }
 
 .prompt-input {
@@ -99,7 +97,8 @@
   background-color: #c2c2c2e5;
 }
 
-.prompt-input-field {}
+.prompt-input-field {
+}
 
 .timestamp {
   font-size: 12px;
@@ -282,6 +281,36 @@ input {
   padding-right: 12px;
 }
 
+/* CSS Styles */
+.full-page-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; /* Set your desired background color */
+}
+
+.centered-content {
+  text-align: center;
+}
+
+.connect-wallet-message {
+  font-size: 20px; /* Set your desired font size */
+  margin-bottom: 20px; /* Adjust the spacing as needed */
+  /* Add any other styling you want for the message */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Add any other styling you want for the button container */
+}
+
 // .response-loader {
 // background-color: rgba(52, 152, 219, 0.5);
 // padding: 10px;
@@ -320,7 +349,6 @@ input {
 }
 
 @keyframes loader-animation {
-
   0%,
   100% {
     transform: scale(1);

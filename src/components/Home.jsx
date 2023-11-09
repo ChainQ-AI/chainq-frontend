@@ -35,9 +35,9 @@ function Home() {
 
   const getStarted = async () => {
     if (isConnected) {
-      // console.log(isSigned);
+      console.log(`is signed: ${address}`);
       if (isSigned == true) {
-        const { isActive } = await getPlanStatus();
+        const { isActive } = await getPlanStatus(address);
 
         if (isActive) {
           navigate("./chat-dashboard");
@@ -90,7 +90,7 @@ function Home() {
             </p>
             <div className="try-and-instructions-btn">
               <button className="try-btn" onClick={() => getStarted()}>
-                Try ChainQ!
+                Login
                 <span className="rightA-icon-container">
                   <FaAnglesRight className="rightA-icon" />
                 </span>
