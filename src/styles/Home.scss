@@ -88,17 +88,17 @@
 
 .try-btn {
   background-color: #2e4062;
-  // background-color: #246aee;
   border: 1px solid #246aee;
   color: white;
-
-  width: 28%;
-  padding: 3% 3% 2% 3%;
+  width: 150px; /* Adjust the width as needed */
+  padding: 10px; /* Adjust the padding as needed */
+  margin: 10px; /* Adjust the margin as needed */
   font-size: 1.3rem;
   letter-spacing: 2px;
   border-radius: 10px;
   display: flex;
-  // position: relative;
+  justify-content: center; /* Center the button horizontally */
+  align-items: center; /* Center the button vertically */
 }
 
 .try-btn:hover {
