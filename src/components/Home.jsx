@@ -49,7 +49,7 @@ function Home() {
         setShowPopup(!showPopup);
       }
     } else {
-      toast.error("Please connect to the wallet first!");
+      alert("Please connect to the wallet first!");
     }
   };
 
