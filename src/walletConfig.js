@@ -1,4 +1,4 @@
-import { createWalletClient, createPublicClient, custom, http } from "viem";
+import { createWalletClient, createPublicClient, http } from "viem";
 import { scrollSepolia } from "viem/chains";
 
 // const transport = http("https://scroll-sepolia.public.blastapi.io/");
@@ -9,7 +9,7 @@ import { scrollSepolia } from "viem/chains";
 
 export const walletClient = createWalletClient({
   chain: scrollSepolia,
-  transport: custom(window.ethereum),
+  transport: http("https://rpc.scroll.io"),
 });
 
 export const publicClient = createPublicClient({
