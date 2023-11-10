@@ -4,7 +4,7 @@ import { addUser } from "../APIs/apis";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useAccount, useConnect } from "wagmi";
-import { walletClient } from "../WalletConfig";
+import { walletClient } from "../walletConfig";
 import { getPlanStatus } from "../helper/planStatus";
 
 const Popup = ({ onClose, setShowPlanPopup }) => {
