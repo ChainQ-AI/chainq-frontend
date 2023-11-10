@@ -1,4 +1,4 @@
-import { createWalletClient, createPublicClient, http } from "viem";
+import { createWalletClient, createPublicClient, custom, http } from "viem";
 import { scrollSepolia } from "viem/chains";
 
 // const transport = http("https://scroll-sepolia.public.blastapi.io/");
@@ -9,7 +9,7 @@ import { scrollSepolia } from "viem/chains";
 
 export const walletClient = createWalletClient({
   chain: scrollSepolia,
-  transport: http("https://rpc.scroll.io"),
+  transport: custom(window.ethereum),
 });
 
 export const publicClient = createPublicClient({
@@ -17,4 +17,4 @@ export const publicClient = createPublicClient({
   transport: http("https://rpc.scroll.io"),
 });
 // JSON-RPC Account
-export const [account] = await walletClient.getAddresses();
+// export const [account] = await walletClient.getAddresses();

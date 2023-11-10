@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import abi from "../artifacts/chainq_abi.json";
 import { useAccount, useConnect } from "wagmi";
 import { getPlanStatus } from "../helper/planStatus";
-import { publicClient, walletClient, account } from "../walletConfig";
 import { CHAINQ_SCROLL, PLAN_PRICE } from "../config";
 import chainq_abi from "../artifacts/chainq_abi.json";
 import { purchaseSubscription } from "../helper/buyPlan";

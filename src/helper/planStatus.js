@@ -1,4 +1,4 @@
-import { account, publicClient } from "../walletConfig";
+import { publicClient } from "../walletConfig";
 import { CHAINQ_SCROLL } from "../config";
 import chainq_abi from "../artifacts/chainq_abi.json";
 

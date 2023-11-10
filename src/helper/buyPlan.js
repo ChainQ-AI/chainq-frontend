@@ -1,4 +1,4 @@
-import { publicClient, walletClient, account } from "../walletConfig";
+import { publicClient, walletClient } from "../walletConfig";
 import { CHAINQ_SCROLL, PLAN_PRICE } from "../config";
 import chainq_abi from "../artifacts/chainq_abi.json";
 export async function simulateAndWriteContract(
