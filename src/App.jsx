@@ -10,8 +10,8 @@ const chains = [scroll, scrollSepolia];
 const config = createConfig(
   getDefaultConfig({
     // Required API Keys
-    alchemyId: "zy0YskI1Q19N6MsIo4KWq2goniaYKTix", // or infuraId
-    walletConnectProjectId: "process.env.WALLETCONNECT_PROJECT_ID",
+    alchemyId: "O5NYvtwLMNG0LjAXPQEk0YJT2l3UxTAY", // or infuraId
+    walletConnectProjectId: "4c1fb4009a66dfd6a5f0c2babec3254b",
     chains,
 
     // Required

@@ -3,7 +3,6 @@ import "../styles/Popup.css";
 import { addUser } from "../APIs/apis";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
 import { useAccount, useConnect } from "wagmi";
 import { walletClient } from "../WalletConfig";
 import { getPlanStatus } from "../helper/planStatus";
