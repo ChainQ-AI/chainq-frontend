@@ -4,8 +4,8 @@ import "./App.css";
 import MainDashboard from "./components/MainDashboard.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import { scrollSepolia } from "wagmi/chains";
-const chains = [scrollSepolia];
+import { scrollSepolia, scroll } from "wagmi/chains";
+const chains = [scroll, scrollSepolia];
 
 const config = createConfig(
   getDefaultConfig({

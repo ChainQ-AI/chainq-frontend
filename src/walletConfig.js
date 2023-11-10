@@ -14,7 +14,7 @@ export const walletClient = createWalletClient({
 
 export const publicClient = createPublicClient({
   chain: scrollSepolia,
-  transport: http("https://scroll-sepolia.public.blastapi.io/"),
+  transport: http("https://rpc.scroll.io"),
 });
 // JSON-RPC Account
 export const [account] = await walletClient.getAddresses();

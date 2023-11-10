@@ -23,10 +23,10 @@ export async function simulateAndWriteContract(
 export async function purchaseSubscription() {
   try {
     const transactionHash = await simulateAndWriteContract(
-      account,
+      "0x97861976283e6901b407D1e217B72c4007D9F64D",
       CHAINQ_SCROLL,
       "purchaseSubscription",
-      PLAN_PRICE
+      [PLAN_PRICE]
     );
 
     const transactionReceipt = await publicClient.waitForTransactionReceipt({
@@ -43,8 +43,6 @@ export async function purchaseSubscription() {
     return {
       success: false,
       error: error,
-      hash: transactionHash,
-      receipt: transactionReceipt,
     };
   }
 }

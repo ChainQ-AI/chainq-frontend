@@ -9,8 +9,6 @@ import { account, walletClient, publicClient } from "../WalletConfig";
 import { getPlanStatus } from "../helper/planStatus";
 
 const Popup = ({ onClose, setShowPlanPopup }) => {
-  console.log(account);
-
   const { address, isConnecting, isDisconnected } = useAccount();
   const { connector: activeConnector, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -45,7 +43,7 @@ const Popup = ({ onClose, setShowPlanPopup }) => {
 
   const getSign = async () => {
     const signature = await walletClient.signMessage({
-      account: account,
+      account: address,
       message: "Login to ChainQ",
     });
     console.log(signature);
